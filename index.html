@@ -1,1 +1,691 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="EndoExplained breaks down endometriosis research in plain language, with links to original papers, a glossary, and quick questions.">
+  <title>EndoExplained | Endometriosis research in plain language</title>
+  <style>
+    :root {
+      --ink: #263d35;
+      --muted: #56675d;
+      --paper: #faf9f4;
+      --green: #244c3d;
+      --line: #d9dfd5;
+      --lime: #e5edc9;
+      --soft: #edf0e5;
+    }
 
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 24px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.6 Arial, sans-serif;
+    }
+
+    a { color: inherit; text-underline-offset: 4px; }
+    button, input { font: inherit; }
+    button, summary { cursor: pointer; }
+
+    :focus-visible {
+      outline: 3px solid #817428;
+      outline-offset: 4px;
+    }
+
+    .wrap, nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: 24px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 24px;
+      padding-block: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font: 25px Georgia, serif;
+      text-decoration: none;
+    }
+
+    .brand span { color: #66764e; }
+
+    .links, .actions, .filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 24px;
+    }
+
+    .links a { font-size: 0.9rem; text-decoration: none; }
+    .links a:hover { text-decoration: underline; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 64px;
+      align-items: center;
+      padding: 72px 0 64px;
+    }
+
+    .eyebrow {
+      color: #546643;
+      font-size: 0.8rem;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, serif;
+      font-weight: normal;
+      line-height: 1.15;
+    }
+
+    h1 {
+      margin: 16px 0 24px;
+      font-size: clamp(2.75rem, 6vw, 4.5rem);
+      letter-spacing: -0.035em;
+    }
+
+    h1 em { color: #62764c; }
+    h2 { margin: 10px 0 16px; font-size: clamp(2rem, 4vw, 2.5rem); }
+    h3 { margin: 10px 0 14px; font-size: 1.55rem; }
+    p { color: var(--muted); }
+    .hero p { max-width: 520px; font-size: 1.125rem; }
+    .actions { margin-top: 24px; }
+
+    .primary {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 7px;
+      background: var(--green);
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .art {
+      display: grid;
+      align-content: center;
+      min-height: 360px;
+      padding: 48px 24px 30px;
+      border-radius: 50% 50% 8px 8px;
+      background: #e9eddf;
+    }
+
+    .paper, .translated {
+      width: min(100%, 310px);
+      padding: 22px;
+      border-radius: 8px;
+      box-shadow: 0 12px 24px #263d3520;
+    }
+
+    .paper {
+      margin-inline: auto;
+      transform: rotate(-5deg);
+      border: 1px solid var(--line);
+      background: #fffef9;
+    }
+
+    .lines {
+      height: 48px;
+      background: repeating-linear-gradient(transparent 0 9px, #e7e9de 9px 11px);
+    }
+
+    .translated {
+      margin: 0 0 0 auto;
+      transform: rotate(3deg);
+      background: var(--green);
+      color: #fff;
+      font: 1.35rem/1.4 Georgia, serif;
+    }
+
+    .trust {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px 24px;
+      padding: 18px 0;
+      border-block: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .trust span::before { content: "✓ "; color: var(--green); }
+    .section { padding: 62px 0; }
+
+    .sectionhead {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px 24px;
+    }
+
+    .sectionhead p { margin: 0; }
+
+    .search {
+      width: min(100%, 290px);
+      padding: 11px 14px;
+      border: 1px solid #a4b0a5;
+      border-radius: 8px;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .filters { gap: 9px; margin: 24px 0; }
+
+    .filter {
+      padding: 7px 14px;
+      border: 1px solid #a4b0a5;
+      border-radius: 30px;
+      color: var(--ink);
+      background: transparent;
+    }
+
+    .filter[aria-pressed="true"] {
+      border-color: var(--green);
+      background: var(--green);
+      color: #fff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fffefb;
+    }
+
+    .cardart {
+      display: grid;
+      place-items: center;
+      min-height: 125px;
+      background: #e8ecdd;
+      color: #506740;
+    }
+
+    .card:nth-child(3n + 2) .cardart { background: #eee5dd; color: #875b46; }
+    .card:nth-child(3n) .cardart { background: #e3e9e7; color: #496d63; }
+
+    .symbol {
+      display: grid;
+      place-items: center;
+      width: 78px;
+      height: 78px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font: 3rem Georgia, serif;
+    }
+
+    .cardbody { display: flex; flex: 1; flex-direction: column; padding: 21px; }
+    .cardbody p { margin: 0 0 12px; }
+    .cardbody .count { margin-bottom: 16px; }
+    .count { font-size: 0.875rem; }
+
+    .card button {
+      width: 100%;
+      margin-top: auto;
+      padding: 12px 0 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+      background: none;
+      color: var(--green);
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .card button:hover { text-decoration: underline; }
+    .empty { grid-column: 1 / -1; padding: 20px; border: 1px dashed var(--line); }
+
+    .intro, .about {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 40px;
+    }
+
+    .intro {
+      padding: 36px;
+      border-radius: 10px;
+      background: var(--soft);
+    }
+
+    .intro p:first-child, .about p:first-child { margin-top: 0; }
+
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 40px;
+    }
+
+    details { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    details p { margin: 8px 0 0; }
+
+    .about {
+      padding: 50px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    footer { padding: 24px 0; background: #e9ecdf; }
+    footer p { margin: 8px 0 0; font-size: 0.875rem; }
+
+    dialog {
+      width: min(calc(100% - 28px), 740px);
+      max-height: 88vh;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    dialog::backdrop { background: #122a24aa; }
+    dialog h2 { padding-right: 38px; }
+
+    dialog h3 {
+      margin-top: 22px;
+      margin-bottom: 6px;
+      font: bold 0.9rem Arial, sans-serif;
+    }
+
+    dialog h3 + p { margin-top: 0; }
+
+    .close {
+      float: right;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--soft);
+      color: var(--ink);
+      font-size: 1.3rem;
+    }
+
+    .takeaway, .knowledge-check {
+      padding: 16px 20px;
+      border-radius: 8px;
+    }
+
+    .takeaway { background: var(--lime); }
+    .takeaway p { margin: 6px 0 0; color: var(--ink); }
+    .knowledge-check { margin: 24px 0; background: var(--soft); }
+    .knowledge-check h3 { margin: 0 0 6px; }
+    .knowledge-check details:last-child { border-bottom: 0; }
+    .source { padding-top: 16px; border-top: 1px solid var(--line); }
+    .source p { margin: 6px 0; font-size: 0.875rem; }
+
+    @media (max-width: 760px) {
+      .hero, .grid, .intro, .glossary, .about { grid-template-columns: 1fr; }
+      .hero { gap: 28px; padding: 44px 0; }
+      .intro, .about { gap: 16px; }
+      .intro, dialog { padding: 22px; }
+      .art { min-height: 280px; }
+      .section { padding: 44px 0; }
+      .search { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body id="top">
+  <nav aria-label="Main navigation">
+    <a class="brand" href="#top">Endo<span>Explained ✳</span></a>
+    <div class="links">
+      <a href="#research">Research</a>
+      <a href="#glossary">Glossary</a>
+      <a href="#about">Our purpose</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <h1>Real research.<br>Plain language.<br><em>More understanding.</em></h1>
+        <p>Endometriosis research shouldn't feel out of reach. Explore what scientists found and get more comfortable asking questions about the evidence.</p>
+        <div class="actions">
+          <a class="primary" href="#research">Explore the research</a>
+          <a href="#basics">New to endometriosis?</a>
+        </div>
+      </div>
+      <div class="art" aria-hidden="true">
+        <div class="paper">
+          <div class="eyebrow">From the research</div>
+          <h3>Making sense of the science</h3>
+          <div class="lines"></div>
+        </div>
+        <div class="translated">What did they find?<br>Why does it matter?</div>
+      </div>
+    </section>
+
+    <div class="trust">
+      <span>Links to original papers</span>
+      <span>Findings and limitations</span>
+      <span>Quick questions with answers</span>
+    </div>
+
+    <section class="section" id="research">
+      <div class="sectionhead">
+        <div>
+          <h2>Research library</h2>
+          <p>Read a plain-language summary, then check your understanding with two quick questions.</p>
+        </div>
+        <input class="search" id="search" type="search"
+          aria-label="Search research summaries" placeholder="Search a topic or keyword…">
+      </div>
+      <div class="filters" role="group" aria-label="Research topics">
+        <button class="filter" type="button" data-filter="All" aria-pressed="true">All research</button>
+        <button class="filter" type="button" data-filter="Diagnosis" aria-pressed="false">Diagnosis</button>
+        <button class="filter" type="button" data-filter="Treatment" aria-pressed="false">Treatment</button>
+        <button class="filter" type="button" data-filter="Understanding endo" aria-pressed="false">Understanding endo</button>
+      </div>
+      <div class="grid" id="cards"></div>
+      <p class="count" id="count" aria-live="polite"></p>
+      <noscript><p>Enable JavaScript to browse the research summaries and glossary.</p></noscript>
+    </section>
+
+    <section class="intro" id="basics">
+      <div><h2>What is endometriosis?</h2></div>
+      <div>
+        <p>Endometriosis is a long-term condition in which tissue similar to the lining of the uterus grows outside it. It can cause inflammation, severe pain, and difficulty becoming pregnant. Experiences vary from person to person.</p>
+        <p>Pain that disrupts daily life deserves attention. Knowing the terms can help you describe your concerns to a healthcare professional.</p>
+        <a href="https://www.who.int/news-room/fact-sheets/detail/endometriosis"
+          target="_blank" rel="noopener noreferrer">Read the World Health Organization overview</a>
+      </div>
+    </section>
+
+    <section class="section" id="glossary">
+      <h2>Glossary</h2>
+      <p>Tap a term for an everyday explanation.</p>
+      <div class="glossary" id="terms"></div>
+    </section>
+
+    <section class="about" id="about">
+      <div><h2>Our purpose</h2></div>
+      <div>
+        <p>EndoExplained makes research easier to approach for people living with endometriosis, their families, and anyone curious about the condition.</p>
+        <p>Each explainer identifies the original paper, describes how the research was done, and explains what questions the study leaves open.</p>
+        <details>
+          <summary>How to read these summaries</summary>
+          <p>Start with the takeaway, then look at how the researchers reached their conclusions. The original papers include full methods, funding disclosures, and any safety results. These educational summaries were prepared with AI assistance and have not been clinically reviewed.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <a class="brand" href="#top">Endo<span>Explained ✳</span></a>
+      <p>For education. Talk with a qualified healthcare professional about symptoms, diagnosis, or treatment.</p>
+    </div>
+  </footer>
+
+  <dialog id="reader" aria-labelledby="reader-title">
+    <form method="dialog">
+      <button class="close" aria-label="Close summary">×</button>
+    </form>
+    <div id="article"></div>
+  </dialog>
+
+  <script>
+    const papers = [
+      {
+        topic: "Diagnosis",
+        type: "Clinical review",
+        year: 2023,
+        icon: "◎",
+        title: "Does diagnosis always need surgery?",
+        description: "What a clinical review explains about symptoms, imaging, and getting care.",
+        source: "Allaire C, Bedaiwy MA, Yong PJ. Diagnosis and management of endometriosis. CMAJ (2023).",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10120420/",
+        takeaway: "Clinicians can sometimes use symptoms, an exam, and imaging to reach a working diagnosis and begin treatment before surgery.",
+        question: "How can clinicians recognize and manage endometriosis?",
+        method: "The authors brought together existing research and clinical guidelines.",
+        finding: "Symptoms and their impact on daily life matter. Imaging can help identify some forms of endometriosis. Depending on the person, care may involve medicines, surgery, or support from different health professionals.",
+        limitation: "The review summarizes general evidence, and similar symptoms can occur with other conditions. An individual diagnosis depends on a clinician's assessment.",
+        discussion: "What could explain my symptoms, and what might imaging show in my situation?",
+        checks: [
+          ["What two sources of information can help clinicians assess possible endometriosis?", "Symptoms and imaging are two examples. A clinician may also use a physical exam and medical history."],
+          ["Can a research review diagnose an individual?", "An individual diagnosis depends on a clinician's assessment. A review provides general evidence."]
+        ]
+      },
+      {
+        topic: "Treatment",
+        type: "Randomized trials",
+        year: 2022,
+        icon: "↗",
+        title: "Can a combination medicine reduce pain?",
+        description: "A plain-language look at the SPIRIT trials of relugolix combination therapy.",
+        source: "Giudice LC et al. Once daily oral relugolix combination therapy versus placebo in patients with endometriosis-associated pain. The Lancet (2022).",
+        url: "https://pubmed.ncbi.nlm.nih.gov/35717987/",
+        takeaway: "More participants taking relugolix combination therapy met the trials' pain-response criteria than those taking a placebo.",
+        question: "Could this combination treatment improve endometriosis-associated pain?",
+        method: "Two phase 3 trials randomly assigned participants to treatment or placebo. Participants and the researchers assessing them were kept unaware of group assignments.",
+        finding: "In SPIRIT 1, 75% of participants in the treatment group met the menstrual-pain response criteria, compared with 27% in the placebo group. A response meant meeting the study's improvement threshold.",
+        limitation: "Some people may still experience pain after meeting the response criteria. The original paper also reports safety outcomes, which matter when considering the treatment.",
+        discussion: "How do the possible benefits and risks fit my goals and medical history?",
+        checks: [
+          ["What did the researchers compare?", "They compared relugolix combination therapy with a placebo."],
+          ["What counted as a pain response?", "Participants met the trial's improvement threshold. They could still experience pain."]
+        ]
+      },
+      {
+        topic: "Understanding endo",
+        type: "Research review",
+        year: 2022,
+        icon: "✳",
+        title: "Why does endometriosis need a wider view?",
+        description: "Looking at the biology and the case for care that considers the whole person.",
+        source: "Pathophysiology, diagnosis, and management of endometriosis. BMJ (2022).",
+        url: "https://www.bmj.com/content/379/bmj-2022-070750",
+        takeaway: "Endometriosis can involve multiple body systems, and the review supports care tailored to the person.",
+        question: "What biological factors might contribute to endometriosis, and how can that knowledge inform care?",
+        method: "The authors reviewed research on possible genetic, hormonal, and immune-system contributions, alongside approaches to diagnosis and care.",
+        finding: "The authors describe how care can combine approaches and draw on different specialties to meet a person's needs.",
+        limitation: "The review presents several possible mechanisms. More research is needed to understand how those mechanisms interact and how they vary between people.",
+        discussion: "Which aspects of someone's symptoms might benefit from a broader care team?",
+        checks: [
+          ["What biological factors does the review discuss?", "It discusses possible contributions from genes, hormones, and the immune system."],
+          ["Why might care involve several specialties?", "Endometriosis affects people in different ways, so care may need to address multiple concerns."]
+        ]
+      },
+      {
+        topic: "Diagnosis",
+        type: "Systematic review",
+        year: 2025,
+        icon: "◷",
+        title: "Why can an endometriosis diagnosis take years?",
+        description: "A review of 17 studies looks at when delays happen and why reported wait times vary.",
+        source: "De Corte P et al. Time to Diagnose Endometriosis. BJOG (2025).",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11625652/",
+        takeaway: "In studies that measured the time from first symptoms to diagnosis, reported means or medians ranged from 5 to 12 years.",
+        question: "How long does it take to get a diagnosis, and why do estimates vary?",
+        method: "The authors searched published research in a structured way and included 17 studies. They compared how studies measured time, including whether they started at first symptoms or the first medical visit.",
+        finding: "Delays occurred both before and after the first medical visit. Possible contributors discussed in the review include symptoms being treated as a normal part of periods and difficulty accessing specialists.",
+        limitation: "Studies measured time in different ways and included different groups of people. The reported range describes study results, and individual experiences can vary.",
+        discussion: "What could help someone with disruptive symptoms get their concerns heard earlier?",
+        checks: [
+          ["Why can two studies report different wait times?", "One might start counting at first symptoms while another starts at the first medical visit."],
+          ["What does the 5–12 year range describe?", "It describes the range of reported means or medians across studies measuring time from first symptoms to diagnosis."]
+        ]
+      },
+      {
+        topic: "Understanding endo",
+        type: "Laboratory study",
+        year: 2026,
+        icon: "◉",
+        title: "How can a 3D lab model help us study endometriosis?",
+        description: "A team used human cells to model one possible step in how endometriosis starts.",
+        source: "Rahmana MDR et al. Compound design of a patient-derived 3D cell culture system modelling early peritoneal endometriosis. Disease Models & Mechanisms (2026).",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12919959/",
+        takeaway: "In a lab model, tiny tissue-like clusters attached to a layer built to resemble the lining inside the abdomen.",
+        question: "Can researchers recreate a possible early step in endometriosis outside the body?",
+        method: "The team built a 3D model from human cells. One part represented the lining inside the abdomen. The other used organoids, tiny 3D clusters of cells, together with supporting cells to mimic shed tissue.",
+        finding: "The clusters attached to the model lining. Researchers can use that result to study how the tissues interact during attachment, a possible early step in how endometriosis lesions form.",
+        limitation: "The experiment happened outside the body. The model reproduces selected features, and further research is needed to understand how lesions first develop in people.",
+        discussion: "What other parts of the body's environment could researchers include in a future model?",
+        checks: [
+          ["Was this study done in vitro or in vivo?", "In vitro. Researchers observed cells in a lab model outside the body."],
+          ["What did the researchers see in the model?", "They saw tissue-like clusters attach to the model lining."]
+        ]
+      }
+    ];
+
+    const glossary = {
+      "Association": "A relationship between things in the data. A relationship alone cannot establish cause and effect.",
+      "Clinical review": "An article that brings together existing research to explain a medical topic.",
+      "Double-blind": "In a treatment trial, this generally means participants and the researchers assessing them do not know who received which treatment.",
+      "Dysmenorrhea": "The medical term for painful menstrual periods.",
+      "In vitro": "Research done outside a living organism, such as work with cells in a laboratory dish.",
+      "In vivo": "Research done in a living organism, such as a person or an animal.",
+      "Organoid": "A tiny 3D cluster of cells grown in a lab that reproduces some features of a tissue.",
+      "Placebo": "A comparison treatment without the active treatment being tested.",
+      "Randomized trial": "A study that assigns participants to groups by chance to compare treatments more fairly.",
+      "Systematic review": "A study that follows a plan to find, select, and combine evidence from multiple studies."
+    };
+
+    const search = document.getElementById("search");
+    const cards = document.getElementById("cards");
+    const count = document.getElementById("count");
+    const reader = document.getElementById("reader");
+    const article = document.getElementById("article");
+    const filters = document.querySelectorAll("[data-filter]");
+
+    let activeTopic = "All";
+
+    function renderCards() {
+      const query = search.value.trim().toLowerCase();
+
+      const matches = papers
+        .map((paper, index) => ({ paper, index }))
+        .filter(({ paper }) => {
+          const matchesTopic = activeTopic === "All" || paper.topic === activeTopic;
+          const searchableText = [
+            paper.title, paper.description, paper.topic, paper.type,
+            paper.source, paper.takeaway, paper.method, paper.finding
+          ].join(" ").toLowerCase();
+
+          return matchesTopic && searchableText.includes(query);
+        });
+
+      cards.innerHTML = matches.length
+        ? matches.map(({ paper, index }) => `
+          <article class="card">
+            <div class="cardart" aria-hidden="true">
+              <span class="symbol">${paper.icon}</span>
+            </div>
+            <div class="cardbody">
+              <div class="eyebrow">${paper.topic} · ${paper.year}</div>
+              <h3>${paper.title}</h3>
+              <p>${paper.description}</p>
+              <p class="count">${paper.type} · 2 min read</p>
+              <button type="button" data-paper="${index}"
+                aria-label="Read the explanation: ${paper.title}">Read the explanation</button>
+            </div>
+          </article>
+        `).join("")
+        : '<p class="empty">No summaries match. Try another keyword or select All research.</p>';
+
+      count.textContent = `${matches.length} of ${papers.length} research summaries`;
+    }
+
+    function openPaper(paper) {
+      const questions = paper.checks.map(([question, answer]) => `
+        <details>
+          <summary>${question}</summary>
+          <p>${answer}</p>
+        </details>
+      `).join("");
+
+      article.innerHTML = `
+        <div class="eyebrow">${paper.type} · ${paper.year}</div>
+        <h2 id="reader-title">${paper.title}</h2>
+        <div class="takeaway">
+          <div class="eyebrow">The plain-language takeaway</div>
+          <p>${paper.takeaway}</p>
+        </div>
+        <h3>The research question</h3>
+        <p>${paper.question}</p>
+        <h3>How the researchers studied it</h3>
+        <p>${paper.method}</p>
+        <h3>What they found</h3>
+        <p>${paper.finding}</p>
+        <h3>Study limitations</h3>
+        <p>${paper.limitation}</p>
+        <section class="knowledge-check" aria-labelledby="check-title">
+          <h3 id="check-title">Check your understanding</h3>
+          ${questions}
+        </section>
+        <h3>A question to discuss</h3>
+        <p>${paper.discussion}</p>
+        <div class="source">
+          <a href="${paper.url}" target="_blank" rel="noopener noreferrer">Read the original paper</a>
+          <p>${paper.source}</p>
+        </div>
+      `;
+
+      reader.showModal();
+      reader.scrollTop = 0;
+    }
+
+    search.addEventListener("input", renderCards);
+
+    filters.forEach((filter) => {
+      filter.addEventListener("click", () => {
+        activeTopic = filter.dataset.filter;
+        filters.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button === filter));
+        });
+        renderCards();
+      });
+    });
+
+    cards.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-paper]");
+      if (button) {
+        openPaper(papers[Number(button.dataset.paper)]);
+      }
+    });
+
+    reader.addEventListener("click", (event) => {
+      if (event.target !== reader) return;
+
+      const bounds = reader.getBoundingClientRect();
+      const outside = event.clientX < bounds.left || event.clientX > bounds.right
+        || event.clientY < bounds.top || event.clientY > bounds.bottom;
+
+      if (outside) reader.close();
+    });
+
+    document.getElementById("terms").innerHTML = Object.entries(glossary)
+      .map(([term, definition]) => `
+        <details>
+          <summary>${term}</summary>
+          <p>${definition}</p>
+        </details>
+      `).join("");
+
+    renderCards();
+  </script>
+</body>
+</html>
